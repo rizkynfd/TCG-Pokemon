@@ -42,9 +42,9 @@ export default async function AdminPage() {
       .order('pulled_at', { ascending: false })
       .limit(10),
     supabase.from('profiles')
-      .select('username, email, total_pulls, coins, created_at')
+      .select('id, username, email, total_pulls, coins, gems, dust, created_at')
       .order('created_at', { ascending: false })
-      .limit(8),
+      .limit(20),
   ])
 
   return (
