@@ -108,7 +108,7 @@ export default async function DashboardPage() {
                 <div className="text-[10px] font-bold text-[#A8A29E] uppercase tracking-tighter">Live Sync</div>
               </div>
               <p className="text-[#A8A29E] text-sm font-medium mb-1">{label}</p>
-              <h3 className="text-3xl font-['Righteous'] text-white">
+              <h3 className="text-3xl font-['Righteous'] text-white" suppressHydrationWarning>
                 {value.toLocaleString()}
               </h3>
             </div>
@@ -140,7 +140,7 @@ export default async function DashboardPage() {
                     </p>
                     <p className="text-xs text-[#A8A29E]">Guaranteed Ultra Rare at 50 pulls</p>
                   </div>
-                  <span className="text-violet-400 font-['Righteous'] text-xl">{profile?.pity_ultra ?? 0}<span className="text-[#57534E] text-sm">/50</span></span>
+                  <span className="text-violet-400 font-['Righteous'] text-xl" suppressHydrationWarning>{profile?.pity_ultra ?? 0}<span className="text-[#57534E] text-sm">/50</span></span>
                 </div>
                 <div className="h-3 bg-black/40 rounded-full overflow-hidden border border-white/5 p-0.5">
                   <div
@@ -159,7 +159,7 @@ export default async function DashboardPage() {
                     </p>
                     <p className="text-xs text-[#A8A29E]">Guaranteed Secret Rare at 100 pulls</p>
                   </div>
-                  <span className="text-orange-400 font-['Righteous'] text-xl">{profile?.pity_ultra ?? 0}<span className="text-[#57534E] text-sm">/100</span></span>
+                  <span className="text-orange-400 font-['Righteous'] text-xl" suppressHydrationWarning>{profile?.pity_ultra ?? 1}<span className="text-[#57534E] text-sm">/100</span></span>
                 </div>
                 <div className="h-3 bg-black/40 rounded-full overflow-hidden border border-white/5 p-0.5">
                   <div
@@ -200,7 +200,7 @@ export default async function DashboardPage() {
                     <div className="w-3 h-3 rounded-full bg-[#CA8A04]/20 flex items-center justify-center">
                       <div className="w-1.5 h-1.5 rounded-full bg-[#CA8A04]" />
                     </div>
-                    <p className="text-[#CA8A04] text-xs font-['Righteous']">
+                    <p className="text-[#CA8A04] text-xs font-['Righteous']" suppressHydrationWarning>
                       {pack.cost_coins.toLocaleString()}
                     </p>
                   </div>

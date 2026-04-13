@@ -98,7 +98,7 @@ export default function AdminPanelView({ stats, recentPulls, latestUsers, adminE
             <div className={`w-9 h-9 rounded-xl ${bg} border ${border} flex items-center justify-center mb-3`}>
               <Icon className={`w-4.5 h-4.5 ${color}`} />
             </div>
-            <p className={`font-['Righteous'] text-2xl ${color}`}>{value.toLocaleString()}</p>
+            <p className={`font-['Righteous'] text-2xl ${color}`} suppressHydrationWarning>{value.toLocaleString()}</p>
             <p className="text-[#A8A29E] text-xs mt-0.5 font-medium">{label}</p>
           </motion.div>
         ))}
@@ -254,7 +254,7 @@ export default function AdminPanelView({ stats, recentPulls, latestUsers, adminE
               <p className="text-[#57534E] text-[10px] truncate mt-0.5">{u.email}</p>
               <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/5">
                 <Zap className="w-3 h-3 text-[#CA8A04]" />
-                <span className="text-[#A8A29E] text-[10px]">{(u.total_pulls ?? 0).toLocaleString()} pulls</span>
+                <span className="text-[#A8A29E] text-[10px]" suppressHydrationWarning>{(u.total_pulls ?? 0).toLocaleString()} pulls</span>
               </div>
             </div>
           ))}

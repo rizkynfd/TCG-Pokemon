@@ -65,7 +65,7 @@ export default async function HistoryPage() {
               <Icon className={`w-4 h-4 ${color}`} />
               <span className="text-[#A8A29E] text-xs">{label}</span>
             </div>
-            <p className={`font-['Righteous'] text-2xl ${color}`}>{value.toLocaleString()}</p>
+            <p className={`font-['Righteous'] text-2xl ${color}`} suppressHydrationWarning>{value.toLocaleString()}</p>
           </div>
         ))}
       </div>

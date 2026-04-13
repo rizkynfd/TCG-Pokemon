@@ -99,7 +99,7 @@ export default function CraftingView({ dust, craftableCards, ownedCardIds }: Cra
           <span className="text-2xl">✨</span>
           <div>
             <p className="text-[#A8A29E] text-xs">Available Dust</p>
-            <p className="font-['Righteous'] text-2xl text-violet-400">{currentDust.toLocaleString()}</p>
+            <p className="font-['Righteous'] text-2xl text-violet-400" suppressHydrationWarning>{currentDust.toLocaleString()}</p>
           </div>
         </div>
       </motion.div>

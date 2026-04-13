@@ -38,22 +38,26 @@ const BADGE_COLORS: Record<string, string> = {
 
 export default function EventBanner({ event }: EventBannerProps) {
   const [dismissed, setDismissed] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const timeLeft = useCountdown(event.endDate)
 
-  // Check if event is expired
-  const isExpired = new Date(event.endDate).getTime() < Date.now()
-  if (!event.enabled || isExpired || dismissed) return null
-
-  // Check localStorage dismissal
+  // Check localStorage dismissal and set mounted
   useEffect(() => {
     const wasDismissed = localStorage.getItem(`event_dismissed_${event.id}`)
     if (wasDismissed) setDismissed(true)
+    setIsMounted(true)
   }, [event.id])
 
   const handleDismiss = () => {
     localStorage.setItem(`event_dismissed_${event.id}`, '1')
     setDismissed(true)
   }
+
+  // Check if event is expired
+  const isExpired = new Date(event.endDate).getTime() < Date.now()
+
+  // Prevent hydration mismatch: don't render until mounted
+  if (!isMounted || !event.enabled || isExpired || dismissed) return null
 
   const badgeClass = BADGE_COLORS[event.badgeColor] ?? BADGE_COLORS.gold
 

@@ -93,7 +93,9 @@ export default function ShopPage() {
                         <h3 className="text-white text-xl font-bold">{bundle.name}</h3>
                         <div className="flex items-center gap-2">
                           <p className={`text-3xl font-['Righteous'] ${bundle.iconColor}`}>
-                            {bundle.gems.toLocaleString()}
+                            <span suppressHydrationWarning>
+                              {bundle.gems.toLocaleString()}
+                            </span>
                           </p>
                           {bundle.bonus > 0 && (
                             <div className="bg-green-500/20 text-green-400 text-[10px] font-black px-2 py-0.5 rounded-md border border-green-500/20">

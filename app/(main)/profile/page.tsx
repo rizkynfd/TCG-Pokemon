@@ -89,7 +89,7 @@ export default async function ProfilePage() {
         {stats.map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="bg-[#1C1917] border border-[#44403C] rounded-xl p-4 text-center">
             <Icon className={`w-5 h-5 ${color} mx-auto mb-2`} />
-            <p className={`font-['Righteous'] text-xl ${color}`}>{value.toLocaleString()}</p>
+            <p className={`font-['Righteous'] text-xl ${color}`} suppressHydrationWarning>{value.toLocaleString()}</p>
             <p className="text-[#A8A29E] text-xs mt-0.5">{label}</p>
           </div>
         ))}
@@ -118,7 +118,7 @@ export default async function ProfilePage() {
                     <span className={`text-sm font-semibold ${isActive ? t.color : isPassed ? 'text-[#A8A29E]' : 'text-[#57534E]'}`}>
                       {t.label} {isActive && '← Current'}
                     </span>
-                    <span className="text-[#57534E] text-xs">{t.threshold} pulls</span>
+                    <span className="text-[#57534E] text-xs" suppressHydrationWarning>{t.threshold.toLocaleString()} pulls</span>
                   </div>
                   {isActive && nextThreshold && (
                     <div className="h-1 bg-[#292524] rounded-full overflow-hidden">
