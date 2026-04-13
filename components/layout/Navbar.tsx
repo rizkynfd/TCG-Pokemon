@@ -30,7 +30,7 @@ const NAV_ITEMS = [
   { href: '/admin',        label: 'Admin',        icon: Shield },
 ]
 
-export default function Navbar() {
+export default function Navbar({ isAdmin = false }: { isAdmin?: boolean }) {
   const pathname = usePathname()
   const router   = useRouter()
   const supabase = createClient()
@@ -39,6 +39,12 @@ export default function Navbar() {
     await supabase.auth.signOut()
     router.push('/login')
   }
+
+  // Filter items: Remove '/admin' if not an admin
+  const filteredNavItems = NAV_ITEMS.filter(item => {
+    if (item.href === '/admin' && !isAdmin) return false
+    return true
+  })
 
   return (
     <>
@@ -74,7 +80,7 @@ export default function Navbar() {
         {/* Global Navigation */}
         <nav className="flex-1 px-4 space-y-1">
           <div className="px-4 py-2 text-[10px] font-black text-[#57534E] uppercase tracking-[0.2em] mb-2">Main Menu</div>
-          {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+          {filteredNavItems.map(({ href, label, icon: Icon }) => {
             const active = pathname.toLowerCase() === href.toLowerCase() || 
                           pathname.toLowerCase().startsWith(href.toLowerCase() + '/')
             return (
@@ -126,7 +132,7 @@ export default function Navbar() {
       {/* Modern Mobile Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0C0A09]/90 backdrop-blur-2xl border-t border-white/5 z-[60] px-4 pb-4 pt-2">
         <div className="flex items-center justify-between max-w-sm mx-auto">
-          {NAV_ITEMS.slice(0, 5).map(({ href, label, icon: Icon }) => {
+          {filteredNavItems.map(({ href, label, icon: Icon }) => {
             const active = pathname.toLowerCase() === href.toLowerCase() || 
                           pathname.toLowerCase().startsWith(href.toLowerCase() + '/')
             return (

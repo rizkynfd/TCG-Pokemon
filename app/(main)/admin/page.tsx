@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import AdminPanelView from '@/components/layout/AdminPanelView'
 
@@ -24,6 +24,9 @@ export default async function AdminPage() {
     redirect('/dashboard')
   }
 
+  // Use Admin Client (Service Role) to bypass RLS for stats & user list
+  const adminClient = createAdminClient()
+
   // Gather stats
   const [
     { count: totalUsers },
@@ -33,15 +36,15 @@ export default async function AdminPage() {
     { data: recentPulls },
     { data: latestUsers },
   ] = await Promise.all([
-    supabase.from('profiles').select('*', { count: 'exact', head: true }),
-    supabase.from('cards').select('*', { count: 'exact', head: true }).eq('is_available', true),
-    supabase.from('pull_history').select('*', { count: 'exact', head: true }),
-    supabase.from('inventory').select('*', { count: 'exact', head: true }),
-    supabase.from('pull_history')
+    adminClient.from('profiles').select('*', { count: 'exact', head: true }),
+    adminClient.from('cards').select('*', { count: 'exact', head: true }).eq('is_available', true),
+    adminClient.from('pull_history').select('*', { count: 'exact', head: true }),
+    adminClient.from('inventory').select('*', { count: 'exact', head: true }),
+    adminClient.from('pull_history')
       .select('pulled_at, is_duplicate, is_pity, cards(name, rarity_tier)')
       .order('pulled_at', { ascending: false })
       .limit(10),
-    supabase.from('profiles')
+    adminClient.from('profiles')
       .select('id, username, email, total_pulls, coins, gems, dust, created_at')
       .order('created_at', { ascending: false })
       .limit(20),
