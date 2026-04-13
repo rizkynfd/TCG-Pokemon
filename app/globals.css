@@ -1,0 +1,254 @@
+@import "tailwindcss";
+
+/* ================================================================
+   POKÉVAULT TCG — Design System (Retro-Futurism)
+   Primary: #1C1917 | Accent/CTA: #CA8A04 | Gold
+================================================================ */
+
+:root {
+  --color-primary: #1C1917;
+  --color-secondary: #292524;
+  --color-surface: #1C1917;
+  --color-cta: #CA8A04;
+  --color-cta-hover: #D97706;
+  --color-text: #FAFAF9;
+  --color-muted: #A8A29E;
+  --color-border: #44403C;
+
+  /* Rarity glow colors */
+  --glow-common: #78716C;
+  --glow-uncommon: #16A34A;
+  --glow-rare: #2563EB;
+  --glow-ultra: #9333EA;
+  --glow-secret: #EA580C;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.5);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
+  --shadow-gold: 0 0 20px rgba(202,138,4,0.4), 0 0 40px rgba(202,138,4,0.2);
+
+  background-color: #0C0A09;
+  color: #FAFAF9;
+}
+
+@theme inline {
+  --font-heading: 'Righteous', cursive;
+  --font-body: 'Poppins', sans-serif;
+}
+
+/* ================================================================
+   BASE STYLES
+================================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #0C0A09;
+  color: #FAFAF9;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Righteous', cursive;
+  letter-spacing: 0.02em;
+}
+
+/* ================================================================
+   SCROLLBAR
+================================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #1C1917; }
+::-webkit-scrollbar-thumb { background: #44403C; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #CA8A04; }
+
+/* ================================================================
+   UTILITY CLASSES
+================================================================ */
+.font-heading { font-family: 'Righteous', cursive; }
+.font-body    { font-family: 'Poppins', sans-serif; }
+
+.text-gold  { color: #CA8A04; }
+.text-muted { color: #A8A29E; }
+
+.bg-surface    { background-color: #1C1917; }
+.bg-surface-2  { background-color: #292524; }
+.border-subtle { border-color: #44403C; }
+
+.glow-gold { box-shadow: var(--shadow-gold); }
+
+/* ================================================================
+   RARITY GLOW EFFECTS
+================================================================ */
+.glow-common   { box-shadow: 0 0 12px rgba(120,113,108,0.5); }
+.glow-uncommon { box-shadow: 0 0 16px rgba(22,163,74,0.6); border-color: #16A34A; }
+.glow-rare     { box-shadow: 0 0 20px rgba(37,99,235,0.7); border-color: #2563EB; }
+.glow-ultra    { box-shadow: 0 0 30px rgba(147,51,234,0.8), 0 0 60px rgba(147,51,234,0.3); border-color: #9333EA; }
+.glow-secret   { box-shadow: 0 0 40px rgba(234,88,12,0.9), 0 0 80px rgba(234,88,12,0.4), 0 0 120px rgba(234,88,12,0.2); border-color: #EA580C; }
+
+/* ================================================================
+   HOLOGRAPHIC SHIMMER (Rare+ cards)
+================================================================ */
+@keyframes holographic {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.holo-shimmer {
+  background: linear-gradient(
+    125deg,
+    transparent 0%,
+    rgba(255,255,255,0.05) 20%,
+    rgba(202,138,4,0.1) 40%,
+    rgba(147,51,234,0.1) 60%,
+    rgba(37,99,235,0.1) 80%,
+    transparent 100%
+  );
+  background-size: 400% 400%;
+  animation: holographic 3s ease infinite;
+}
+
+/* ================================================================
+   CRT SCANLINES (subtle texture effect)
+================================================================ */
+.crt-lines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ================================================================
+   NEON GLOW TEXT
+================================================================ */
+.neon-gold {
+  color: #CA8A04;
+  text-shadow: 0 0 10px rgba(202,138,4,0.8), 0 0 20px rgba(202,138,4,0.4);
+}
+
+/* ================================================================
+   CARD FLIP 3D
+================================================================ */
+.perspective { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
+
+/* ================================================================
+   ANIMATIONS
+================================================================ */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 10px rgba(202,138,4,0.4); }
+  50%       { box-shadow: 0 0 25px rgba(202,138,4,0.8), 0 0 50px rgba(202,138,4,0.3); }
+}
+
+@keyframes glitch {
+  0%   { clip-path: inset(10% 0 85% 0); transform: translate(-3px, 0); }
+  20%  { clip-path: inset(55% 0 5% 0);  transform: translate(3px, 0); }
+  40%  { clip-path: inset(40% 0 43% 0); transform: translate(0, 0); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate(3px, 0); }
+  80%  { clip-path: inset(70% 0 15% 0); transform: translate(-3px, 0); }
+  100% { clip-path: inset(10% 0 85% 0); transform: translate(0, 0); }
+}
+
+@keyframes shimmer-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes card-reveal {
+  0%   { opacity: 0; transform: scale(0.8) rotateY(90deg); }
+  100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+}
+
+.animate-float        { animation: float 3s ease-in-out infinite; }
+.animate-pulse-gold   { animation: pulse-gold 2s ease-in-out infinite; }
+.animate-card-reveal  { animation: card-reveal 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+/* ================================================================
+   BUTTON
+================================================================ */
+.btn-primary {
+  background: #CA8A04;
+  color: #0C0A09;
+  font-weight: 700;
+  font-family: 'Righteous', cursive;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-primary:hover {
+  background: #D97706;
+  box-shadow: 0 0 20px rgba(202,138,4,0.5);
+  transform: translateY(-2px);
+}
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-secondary {
+  background: transparent;
+  color: #CA8A04;
+  border: 1px solid #CA8A04;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.btn-secondary:hover {
+  background: rgba(202,138,4,0.1);
+  box-shadow: 0 0 15px rgba(202,138,4,0.3);
+}
+
+/* ================================================================
+   CARD
+================================================================ */
+.card-surface {
+  background: #1C1917;
+  border: 1px solid #44403C;
+  border-radius: 12px;
+  transition: all 200ms ease;
+}
+.card-surface:hover {
+  border-color: #CA8A04;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}

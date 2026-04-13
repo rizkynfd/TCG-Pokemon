@@ -1,0 +1,55 @@
+@layer components {
+  /* Premium Holographic Shine Effect */
+  .holo-effect {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.2) 25%,
+      rgba(255, 255, 255, 0.5) 35%,
+      rgba(255, 255, 255, 0.2) 45%,
+      transparent 50%
+    );
+    background-size: 200% 200%;
+    filter: brightness(1.2) contrast(1.2);
+  }
+
+  .card-container:hover .holo-effect {
+    opacity: 1;
+    animation: holo-shine 1.5s ease-out infinite;
+  }
+
+  @keyframes holo-shine {
+    0% { background-position: 200% 0%; }
+    100% { background-position: -200% 0%; }
+  }
+
+  /* Rarity Gradients */
+  .glow-common { box-shadow: 0 0 10px rgba(120, 113, 108, 0.3); }
+  .glow-uncommon { box-shadow: 0 0 15px rgba(22, 163, 74, 0.4); }
+  .glow-rare { box-shadow: 0 0 25px rgba(37, 99, 235, 0.5); border-color: rgba(37, 99, 235, 0.6) !important; }
+  .glow-ultra { box-shadow: 0 0 35px rgba(147, 51, 234, 0.6); border-color: rgba(147, 51, 234, 0.7) !important; }
+  .glow-secret { box-shadow: 0 0 50px rgba(234, 88, 12, 0.7); border-color: rgba(234, 88, 12, 0.8) !important; animation: secret-pulse 2s infinite; }
+
+  @keyframes secret-pulse {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.02); filter: brightness(1.2); }
+  }
+
+  /* 3D Container */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
