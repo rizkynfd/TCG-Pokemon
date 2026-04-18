@@ -64,7 +64,7 @@ export default function AdminPanelView({ stats, recentPulls, latestUsers, recent
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as Record<string,any>)}
+              onClick={() => setActiveTab(tab.id as any)}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === tab.id
                   ? 'bg-[#CA8A04] text-black shadow-lg'
