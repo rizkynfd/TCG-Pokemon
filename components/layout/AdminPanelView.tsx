@@ -256,11 +256,11 @@ export default function AdminPanelView({ stats, recentPulls, latestUsers, adminE
               <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-white/5">
                 <div className="flex items-center gap-1.5">
                   <Zap className="w-3 h-3 text-yellow-400" />
-                  <span className="text-[#A8A29E] text-[10px] font-bold" suppressHydrationWarning>{u.coins.toLocaleString()}</span>
+                  <span className="text-[#A8A29E] text-[10px] font-bold" suppressHydrationWarning>{(u.coins ?? 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Crown className="w-3 h-3 text-blue-400" />
-                  <span className="text-[#A8A29E] text-[10px] font-bold" suppressHydrationWarning>{u.gems.toLocaleString()}</span>
+                  <span className="text-[#A8A29E] text-[10px] font-bold" suppressHydrationWarning>{(u.gems ?? 0).toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -289,10 +289,10 @@ export default function AdminPanelView({ stats, recentPulls, latestUsers, adminE
               
               <div className="text-center mb-8">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#CA8A04] to-[#B45309] flex items-center justify-center text-black font-black text-2xl mx-auto mb-4 shadow-xl">
-                  {editingUser.username[0].toUpperCase()}
+                  {(editingUser.username ?? editingUser.email ?? '?')[0].toUpperCase()}
                 </div>
                 <h3 className="font-['Righteous'] text-2xl text-white">Manage Trainer</h3>
-                <p className="text-[#A8A29E] text-sm uppercase tracking-widest font-black mt-1">{editingUser.username}</p>
+                <p className="text-[#A8A29E] text-sm uppercase tracking-widest font-black mt-1">{editingUser.username ?? editingUser.email?.split('@')[0] ?? 'Unknown'}</p>
               </div>
 
               <form onSubmit={handleUpdateProfile} className="space-y-6">

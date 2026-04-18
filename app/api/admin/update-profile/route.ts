@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? '')
@@ -28,19 +28,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 })
     }
 
-    // 3. Update profile
-    // We use the regular supabase client here, but because we're on the server
-    // and it's an admin-triggered action, we'll use the service role client 
-    // to bypass RLS if needed. 
-    // Actually, createClient() returns the authenticated client.
-    // For admin-level writes to OTHER users, we NEED the service role.
-    
-    // Let's create a service role client
-    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js')
-    const serviceRoleClient = createSupabaseClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
+    // Use the existing admin client (service role) to bypass RLS
+    const serviceRoleClient = createAdminClient()
 
     const { error } = await serviceRoleClient
       .from('profiles')
