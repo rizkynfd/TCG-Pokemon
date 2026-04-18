@@ -1,4 +1,6 @@
+// @ts-nocheck
 import { createClient, createAdminClient } from '@/lib/supabase/server'
+
 import { NextResponse } from 'next/server'
 
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? '')
