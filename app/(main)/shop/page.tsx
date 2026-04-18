@@ -74,6 +74,50 @@ export default function ShopPage() {
     }
   }
 
+  const handleCoinExchange = async (bundleId: string) => {
+    if (payingId) return
+    setPayingId(bundleId)
+    try {
+      const res = await fetch('/api/shop/exchange', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bundleId }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Gagal menukar coins')
+      showToast('success', `✅ Berhasil menukar gems dengan ${data.coins} Coins!`)
+      // Refresh window slightly to update navbar stats if needed, or rely on future global states
+      setTimeout(() => window.location.reload(), 1500)
+    } catch (err: any) {
+      showToast('error', `❌ ${err.message}`)
+    } finally {
+      setPayingId(null)
+    }
+  }
+
+  const handleClaimReward = async (rewardId: string) => {
+    if (payingId) return
+    setPayingId(rewardId)
+    try {
+      if (rewardId === 'daily_free') {
+        const res = await fetch('/api/daily-reward', { method: 'POST' })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error ?? 'Gagal klaim hadiah')
+        showToast('success', `🎁 Berhasil klaim ${data.coins} Coins!`)
+        setTimeout(() => window.location.reload(), 1500)
+      } else {
+        // Fallback for Elite Bounty or other future rewards
+        setTimeout(() => {
+          showToast('idle', '📺 Fitur Web Ad untuk Elite Bounty belum tersedia.')
+          setPayingId(null)
+        }, 1000)
+      }
+    } catch (err: any) {
+      showToast('error', `❌ ${err.message}`)
+      setPayingId(null)
+    }
+  }
+
   return (
     <>
       {/* Load Midtrans Snap.js */}
@@ -242,8 +286,12 @@ export default function ShopPage() {
                         <p className="text-[#A8A29E] text-[10px] uppercase font-bold tracking-tight">{reward.description}</p>
                       </div>
                     </div>
-                    <button className="text-[10px] font-black text-[#CA8A04] hover:text-white uppercase tracking-widest px-4 py-2 bg-[#CA8A04]/10 rounded-lg transition-colors">
-                      Claim
+                    <button 
+                      onClick={() => handleClaimReward(reward.id)}
+                      disabled={!!payingId}
+                      className="text-[10px] font-black text-[#CA8A04] hover:text-black uppercase tracking-widest px-4 py-2 bg-[#CA8A04]/10 hover:bg-[#CA8A04] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors flex items-center justify-center min-w-[70px]"
+                    >
+                      {payingId === reward.id ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Claim'}
                     </button>
                   </div>
                 ))}
@@ -264,9 +312,15 @@ export default function ShopPage() {
                       <p className="text-[#A8A29E] text-[10px] font-medium">{bundle.label}</p>
                     </div>
                     <button
-                      className="flex items-center gap-2 bg-[#CA8A04]/10 text-[#CA8A04] px-4 py-2 rounded-xl font-black text-[11px] tracking-widest hover:bg-[#CA8A04] hover:text-black transition-all"
+                      onClick={() => handleCoinExchange(bundle.id)}
+                      disabled={!!payingId}
+                      className="flex items-center gap-2 bg-[#CA8A04]/10 text-[#CA8A04] px-4 py-2 rounded-xl font-black text-[11px] tracking-widest hover:bg-[#CA8A04] hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      EXCHANGE {bundle.gems} <Gem className="w-3 h-3" />
+                      {payingId === bundle.id ? (
+                        <><Loader2 className="w-3 h-3 animate-spin" /> PROSES</>
+                      ) : (
+                        <>EXCHANGE {bundle.gems} <Gem className="w-3 h-3" /></>
+                      )}
                     </button>
                   </div>
                 ))}
