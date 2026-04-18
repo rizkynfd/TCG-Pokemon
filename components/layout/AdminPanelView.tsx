@@ -165,10 +165,13 @@ function OverviewTab({ stats, recentPulls, latestUsers }: { stats: AdminStats, r
     }
   }
 
-  const filteredUsers = latestUsers.filter(u => 
-    u.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    u.email?.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredUsers = latestUsers.filter(u => {
+    if (!searchTerm) return true
+    const searchLower = searchTerm.toLowerCase()
+    const uname = u.username?.toLowerCase() || ''
+    const email = u.email?.toLowerCase() || ''
+    return uname.includes(searchLower) || email.includes(searchLower)
+  })
 
   const statCards = [
     { label: 'Total Users',     value: stats.totalUsers,     icon: Users,    color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20' },
