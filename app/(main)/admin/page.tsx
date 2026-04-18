@@ -35,6 +35,9 @@ export default async function AdminPage() {
     { count: totalInventory },
     { data: recentPulls },
     { data: latestUsers },
+    { data: recentTransactions },
+    { data: packs },
+    { data: promos },
   ] = await Promise.all([
     adminClient.from('profiles').select('*', { count: 'exact', head: true }),
     adminClient.from('cards').select('*', { count: 'exact', head: true }).eq('is_available', true),
@@ -48,6 +51,16 @@ export default async function AdminPage() {
       .select('id, username, email, total_pulls, coins, gems, dust, created_at')
       .order('created_at', { ascending: false })
       .limit(20),
+    adminClient.from('transactions')
+      .select('id, type, coins_delta, gems_delta, dust_delta, description, created_at, profiles(username)')
+      .order('created_at', { ascending: false })
+      .limit(20),
+    adminClient.from('packs')
+      .select('*')
+      .order('created_at', { ascending: true }),
+    adminClient.from('promo_codes')
+      .select('*')
+      .order('created_at', { ascending: false }),
   ])
 
   return (
@@ -60,6 +73,9 @@ export default async function AdminPage() {
       }}
       recentPulls={recentPulls ?? []}
       latestUsers={latestUsers ?? []}
+      recentTransactions={recentTransactions ?? []}
+      packs={packs ?? []}
+      promos={promos ?? []}
       adminEmail={user.email ?? ''}
     />
   )

@@ -118,6 +118,29 @@ export default function ShopPage() {
     }
   }
 
+  const handleRedeemPromo = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (payingId) return
+    setPayingId('promo')
+    
+    const formData = new FormData(e.currentTarget)
+    const code = formData.get('code')
+    try {
+      const res = await fetch('/api/promo/redeem', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Gagal klaim hadiah')
+      showToast('success', data.message)
+      setTimeout(() => window.location.reload(), 1500)
+    } catch (err: any) {
+      showToast('error', err.message)
+      setPayingId(null)
+    }
+  }
+
   return (
     <>
       {/* Load Midtrans Snap.js */}
@@ -296,6 +319,27 @@ export default function ShopPage() {
                   </div>
                 ))}
               </div>
+            </section>
+
+            {/* Promo Code User Redeem Section */}
+            <section className="bg-[#1C1917]/20 border border-[#44403C]/40 rounded-2xl p-6 hover:border-[#CA8A04]/30 transition-all">
+              <h2 className="font-['Righteous'] text-lg text-white mb-4">Promo Code</h2>
+              <form onSubmit={handleRedeemPromo} className="flex gap-2">
+                <input 
+                  name="code"
+                  type="text"
+                  required
+                  placeholder="Enter code here..."
+                  className="w-full bg-[#0C0A09] border border-[#292524] rounded-xl px-4 py-2 text-white font-mono uppercase text-sm focus:outline-none focus:border-[#CA8A04]/50"
+                />
+                <button 
+                  disabled={payingId === 'promo'}
+                  type="submit"
+                  className="bg-[#CA8A04] text-black font-black uppercase text-xs px-4 py-2 rounded-xl transition-all hover:brightness-110 disabled:opacity-50"
+                >
+                  {payingId === 'promo' ? '...' : 'REDEEM'}
+                </button>
+              </form>
             </section>
 
             {/* Coin Exchange Section */}
