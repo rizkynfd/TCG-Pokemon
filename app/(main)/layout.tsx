@@ -19,7 +19,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
     <div className="flex min-h-screen bg-[#0C0A09]">
       <Navbar isAdmin={isAdmin} />
       {/* Main content — offset by sidebar width on desktop */}
-      <main className="flex-1 lg:ml-64 pb-20 lg:pb-0 min-h-screen">
+      <main className="flex-1 lg:ml-72 pb-32 lg:pb-0 min-h-screen">
         {children}
       </main>
     </div>

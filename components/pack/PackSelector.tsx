@@ -190,7 +190,7 @@ export default function PackSelector({ packs, selectedPackId, profile, onSelect,
       <AnimatePresence>
         {selectedPack && (
           <motion.div
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg px-4"
+            className="fixed bottom-28 lg:bottom-8 left-1/2 -translate-x-1/2 z-[70] w-full max-w-lg px-4"
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}

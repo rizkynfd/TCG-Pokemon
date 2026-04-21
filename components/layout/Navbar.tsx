@@ -130,8 +130,9 @@ export default function Navbar({ isAdmin = false }: { isAdmin?: boolean }) {
       </aside>
 
       {/* Modern Mobile Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0C0A09]/90 backdrop-blur-2xl border-t border-white/5 z-[60] px-4 pb-4 pt-2">
-        <div className="flex items-center justify-between max-w-sm mx-auto">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0C0A09]/90 backdrop-blur-2xl border-t border-white/5 z-[60] px-2 pb-6 pt-3">
+        <div className="flex items-center gap-6 overflow-x-auto overflow-y-visible no-scrollbar w-full px-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <style dangerouslySetInnerHTML={{__html: `\n            .no-scrollbar::-webkit-scrollbar {\n              display: none;\n            }\n          `}} />
           {filteredNavItems.map(({ href, label, icon: Icon }) => {
             const active = pathname.toLowerCase() === href.toLowerCase() || 
                           pathname.toLowerCase().startsWith(href.toLowerCase() + '/')

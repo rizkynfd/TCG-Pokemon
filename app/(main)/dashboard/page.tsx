@@ -84,7 +84,7 @@ export default async function DashboardPage() {
             <span className="w-8 h-px bg-[#CA8A04]/40" />
             Elite Trainer Dashboard
           </div>
-          <h1 className="text-4xl lg:text-5xl font-['Righteous'] text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-['Righteous'] text-white tracking-tight">
             Welcome back, <span className="text-[#CA8A04]">{profile?.username ?? 'Trainer'}</span>
           </h1>
           <p className="text-[#A8A29E] text-lg max-w-2xl font-light">
