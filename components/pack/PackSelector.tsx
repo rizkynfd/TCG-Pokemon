@@ -195,37 +195,37 @@ export default function PackSelector({ packs, selectedPackId, profile, onSelect,
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
           >
-            <div className="bg-[#1C1917]/95 backdrop-blur-xl border border-[#CA8A04]/40 rounded-3xl p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-[#CA8A04]/10 border border-[#CA8A04]/20 flex items-center justify-center">
+            <div className="bg-[#1C1917]/95 backdrop-blur-xl border border-[#CA8A04]/40 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#CA8A04]/10 border border-[#CA8A04]/20 flex items-center justify-center shrink-0">
                     {selectedPack.image_url ? (
-                      <div className="relative w-8 h-8">
+                      <div className="relative w-7 h-7 sm:w-8 sm:h-8">
                         <Image src={selectedPack.image_url} alt="" fill className="object-contain" />
                       </div>
                     ) : (
-                      <Package className="w-6 h-6 text-[#CA8A04]" />
+                      <Package className="w-5 h-5 sm:w-6 sm:h-6 text-[#CA8A04]" />
                     )}
                   </div>
-                  <div>
-                    <h4 className="font-['Righteous'] text-white leading-none mb-1">{selectedPack.name}</h4>
-                    <p className="text-xs text-[#A8A29E]">Selected for opening</p>
+                  <div className="min-w-0">
+                    <h4 className="font-['Righteous'] text-white leading-none mb-1 text-sm sm:text-base truncate">{selectedPack.name}</h4>
+                    <p className="text-[10px] sm:text-xs text-[#A8A29E]">Selected for opening</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-bold" style={{ color: selectedPack.cost_gems > 0 ? '#60A5FA' : '#CA8A04' }} suppressHydrationWarning>
+                <div className="text-right shrink-0">
+                  <p className="text-xs sm:text-sm font-bold" style={{ color: selectedPack.cost_gems > 0 ? '#60A5FA' : '#CA8A04' }} suppressHydrationWarning>
                     {selectedPack.cost_gems > 0 
                       ? `${(selectedPack.cost_gems * quantity).toLocaleString('en-US')} Gems` 
                       : `${(selectedPack.cost_coins * quantity).toLocaleString('en-US')} Coins`}
                   </p>
-                  <p className="text-[10px] text-[#A8A29E]" suppressHydrationWarning>
-                    Balance: {selectedPack.cost_gems > 0 ? profile?.gems.toLocaleString('en-US') : profile?.coins.toLocaleString('en-US')}
+                  <p className="text-[9px] sm:text-[10px] text-[#A8A29E]" suppressHydrationWarning>
+                    Bal: {selectedPack.cost_gems > 0 ? profile?.gems.toLocaleString('en-US') : profile?.coins.toLocaleString('en-US')}
                   </p>
                 </div>
               </div>
 
               {/* Pity Tracker HUD */}
-              <div className="mb-4">
+              <div className="mb-3 sm:mb-4">
                 <PityTracker
                   pityRare={profile?.pity_rare ?? 0}
                   pityUltra={profile?.pity_ultra ?? 0}
@@ -233,7 +233,7 @@ export default function PackSelector({ packs, selectedPackId, profile, onSelect,
               </div>
 
               {/* Quantity Selection */}
-              <div className="flex items-center gap-2 mb-4 bg-black/40 p-1.5 rounded-2xl border border-white/5">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-4 bg-black/40 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-white/5">
                 {[1, 5, 10].map((num) => {
                   const affordable = canAfford(selectedPack, num)
                   const isQtySelected = quantity === num
@@ -246,7 +246,7 @@ export default function PackSelector({ packs, selectedPackId, profile, onSelect,
                         onSelectWithCount(selectedPack.id, num)
                       }}
                       className={`
-                        flex-1 py-2 rounded-xl text-xs font-black transition-all border
+                        flex-1 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black transition-all border
                         ${isQtySelected 
                           ? 'bg-[#CA8A04] text-black border-[#CA8A04] shadow-[0_0_15px_rgba(202,138,4,0.3)]' 
                           : affordable 
@@ -265,7 +265,7 @@ export default function PackSelector({ packs, selectedPackId, profile, onSelect,
                 onClick={onOpen}
                 disabled={!!(isLoading || !canAfford(selectedPack, quantity) || (selectedPack.set_filter && selectedPack.set_filter.length === 0))}
                 className={`
-                  w-full py-4 rounded-2xl flex items-center justify-center gap-3 font-bold text-lg shadow-xl relative overflow-hidden group
+                  w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl flex items-center justify-center gap-2 sm:gap-3 font-bold text-sm sm:text-lg shadow-xl relative overflow-hidden group
                   ${(selectedPack.set_filter && selectedPack.set_filter.length === 0)
                     ? 'bg-zinc-900 text-zinc-600 border border-zinc-800 cursor-not-allowed'
                     : canAfford(selectedPack, quantity)
